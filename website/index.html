@@ -230,21 +230,32 @@ nav .ctn{display:flex;align-items:center;justify-content:space-between}
 .track{display:none}.track.active{display:block}
 
 /* HERO */
-.hero{padding:160px 0 100px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-200px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,var(--acg) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.hero{padding:160px 0 100px;position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center}
+.hero-video-wrap{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-video-wrap video{width:100%;height:100%;object-fit:cover;filter:blur(4px) brightness(0.35);transform:scale(1.05)}
+.hero-video-wrap .hero-still{display:none;width:100%;height:100%;object-fit:cover;filter:blur(4px) brightness(0.35);transform:scale(1.05)}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,15,.6) 0%,rgba(10,10,15,.85) 100%);z-index:1}
+[data-theme="light"] .hero-video-wrap video{filter:blur(4px) brightness(0.5)}
+[data-theme="light"] .hero-video-wrap .hero-still{filter:blur(4px) brightness(0.5)}
+[data-theme="light"] .hero-video-overlay{background:linear-gradient(180deg,rgba(247,246,243,.5) 0%,rgba(247,246,243,.8) 100%)}
 .hero-content{position:relative;z-index:2}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:var(--acg);border:1px solid var(--bac);border-radius:50px;font-size:.82rem;font-weight:500;color:var(--ac);margin-bottom:32px;animation:fadeUp .8s ease forwards}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(10,10,15,.5);backdrop-filter:blur(10px);border:1px solid var(--bac);border-radius:50px;font-size:.82rem;font-weight:500;color:var(--ac);margin-bottom:32px;animation:fadeUp .8s ease forwards}
 .hero-badge::before{content:'';width:6px;height:6px;background:var(--ac);border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
-.hero h1{font-family:var(--fd);font-size:clamp(2.8rem,6vw,4.5rem);font-weight:900;line-height:1.08;letter-spacing:-.03em;margin-bottom:28px;max-width:750px;animation:fadeUp .8s .1s ease forwards;opacity:0}
+.hero h1{font-family:var(--fd);font-size:clamp(2.8rem,6vw,4.5rem);font-weight:900;line-height:1.08;letter-spacing:-.03em;margin-bottom:28px;max-width:750px;animation:fadeUp .8s .1s ease forwards;opacity:0;text-shadow:0 2px 20px rgba(0,0,0,.3)}
 .hero h1 em{font-style:italic;color:var(--ac)}
 .hero p{font-size:1.15rem;color:var(--t2);max-width:540px;line-height:1.7;margin-bottom:40px;animation:fadeUp .8s .2s ease forwards;opacity:0}
 .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp .8s .3s ease forwards;opacity:0}
 .btn-p{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:var(--ac);color:var(--btn-p-text);border:none;border-radius:50px;font-family:var(--fb);font-size:1rem;font-weight:600;cursor:pointer;transition:.3s;text-decoration:none}
 .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(200,255,62,.3)}
-.btn-s{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:0;color:var(--t1);border:1px solid var(--border);border-radius:50px;font-family:var(--fb);font-size:1rem;font-weight:500;cursor:pointer;transition:.3s;text-decoration:none}
-.btn-s:hover{border-color:var(--t3);background:rgba(255,255,255,.03)}
+.btn-s{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:rgba(10,10,15,.4);backdrop-filter:blur(10px);color:var(--t1);border:1px solid rgba(255,255,255,.15);border-radius:50px;font-family:var(--fb);font-size:1rem;font-weight:500;cursor:pointer;transition:.3s;text-decoration:none}
+.btn-s:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){
+  .hero-video-wrap video{display:none}
+  .hero-video-wrap .hero-still{display:block}
+  .hero{min-height:auto;padding:110px 0 50px}
+}
 
 /* SECTION LABELS */
 .slbl{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.15em;color:var(--ac);margin-bottom:16px}
@@ -666,6 +677,13 @@ footer a{color:var(--t3);text-decoration:none}
 <div id="track-maps" class="track active">
 
 <section class="hero">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline>
+      <source src="hero-video-loop.mp4" type="video/mp4">
+    </video>
+    <img class="hero-still" src="hero-still.jpg" alt="PMNHG GbR Imagefilm">
+    <div class="hero-video-overlay"></div>
+  </div>
   <div class="ctn"><div class="hero-content">
     <div class="hero-badge">Für lokale Unternehmen</div>
     <h1>Dein Google Profil bringt dir keine Kunden?<br><em>Das ändern wir.</em></h1>
@@ -904,6 +922,13 @@ footer a{color:var(--t3);text-decoration:none}
 <div id="track-immo" class="track">
 
 <section class="hero">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline>
+      <source src="hero-video-loop.mp4" type="video/mp4">
+    </video>
+    <img class="hero-still" src="hero-still.jpg" alt="PMNHG GbR Imagefilm">
+    <div class="hero-video-overlay"></div>
+  </div>
   <div class="ctn"><div class="hero-content">
     <div class="hero-badge">Für Makler & Eigentümer</div>
     <h1>Deine Immobilie verdient mehr als ein <em>Handyfoto.</em></h1>
@@ -913,7 +938,7 @@ footer a{color:var(--t3);text-decoration:none}
       <a href="#immo-pakete" class="btn-s">Pakete ansehen</a>
     </div>
   </div>
-  <div class="immo-vis rv">
+  <div class="immo-vis rv" style="position:relative;z-index:2">
     <div class="immo-card bef">
       <span class="immo-lbl">Vorher</span>
       <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=380&fit=crop&q=60&sat=-80&bri=-20" alt="Immobilienfoto vorher – schlechte Belichtung und Handyqualität">
